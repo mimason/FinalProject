@@ -75,7 +75,7 @@ public class World extends JPanel {
 	
 	// checks to see if the projectile collided with any targets in this frame, returns null if it did not hit anything
 	// projectiles should be destroyed if it is's height is less than 0;
-	// should probably calculate collisions via the botom left corner as it will lead
+	// should probably calculate collisions via the bottom left corner as it will lead
 	// utilizes insideofme fn in target
 	public void checkCollisions(){
 	}
@@ -90,8 +90,11 @@ public class World extends JPanel {
 	
 	// iterates through projectiles and moves them
 	public void moveProjectiles(double deltaTime){
-
+		for( Projectile p : projectiles ) {
+			p.move(deltaTime);
+		}
 	}
+	
 	public Launcher getLauncher() {
 		return launcher;
 	}

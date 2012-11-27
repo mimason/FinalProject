@@ -33,7 +33,7 @@ public class Projectile {
 	}
 	
 	public double calcSpeed() {
-		return 0;
+		return Math.sqrt(xVel*xVel + yVel*yVel);
 	}
 	public double getxPos() {
 		return xPos;
@@ -52,10 +52,11 @@ public class Projectile {
 		g.fillOval((int)xPos - SIZE/2, (int)yPos - SIZE/2, SIZE, SIZE);
 	}
 	
-	public void move(double deltaTime){//delta time is the inverse frame rate, used to keep motion smooth on machines where frame rates will be different
+	// delta time is the inverse frame rate, used to keep motion smooth on machines where frame rates will be different
+	public void move(double deltaTime){
 		xPos = xPos + xVel*deltaTime;
-		yPos = yPos + xVel*deltaTime;
-		yVel = yVel - 9.8*deltaTime;
+		yPos = yPos + yVel*deltaTime;
+		yVel = yVel - 10*deltaTime;
 	}
 	
 	
