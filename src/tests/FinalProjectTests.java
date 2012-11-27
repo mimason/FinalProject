@@ -47,7 +47,7 @@ public class FinalProjectTests {
 		world.getProjectiles().clear();
 		
 		world.makeTarget(10,10);
-		world.getProjectiles().add(new Projectile(15,5,0,0));
+		world.addProjectile(new Projectile(10,10,0,0));
 		world.checkCollisions();
 		Assert.assertEquals(1, world.getTargets().size());
 		Assert.assertTrue(world.getTargets().get(0).isHit());
@@ -55,12 +55,14 @@ public class FinalProjectTests {
 		world.makeTarget(30, 10);
 		world.getProjectiles().add(new Projectile(30,10,0,0));
 		world.checkCollisions();
-		Assert.assertEquals(2,world.getTargets().size());
+		Assert.assertEquals(2, world.getTargets().size());
 		Assert.assertTrue(world.getTargets().get(1).isHit());
 		
+		world.makeTarget(100, 100);
 		world.getProjectiles().add(new Projectile(-30,10,0,0));
 		world.checkCollisions();
-		Assert.assertEquals(2,world.getProjectiles().size());
+		Assert.assertEquals(3, world.getTargets().size());
+		Assert.assertFalse(world.getTargets().get(2).isHit());
 	}
 	
 	@Test

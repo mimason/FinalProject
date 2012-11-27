@@ -21,7 +21,6 @@ public class World extends JPanel {
 
 	public World() {
 		projectiles = new ArrayList<Projectile>();
-		//projectiles.add(new Projectile(0, 0, 0, 0));
 		launcher = new Launcher();
 		targets = new ArrayList<Target>();
 	}
@@ -32,7 +31,7 @@ public class World extends JPanel {
 		
 		// Change origin to bottom left
 		g.scale(1.0, -1.0);
-		g.translate(0, -400);
+		g.translate(0, -HEIGHT);
 
 		// Draw background
 		g.setColor(Color.WHITE);
@@ -63,9 +62,7 @@ public class World extends JPanel {
 				locations.add(location);
 				makeTarget(location, size);
 			}
-			
 		}
-		
 	}
 	
 	// makes target at desired location with desired size
@@ -74,10 +71,20 @@ public class World extends JPanel {
 	}
 	
 	// checks to see if the projectile collided with any targets in this frame, returns null if it did not hit anything
-	// projectiles should be destroyed if it is's height is less than 0;
+	// projectiles should be destroyed if its height is less than 0;
 	// should probably calculate collisions via the bottom left corner as it will lead
 	// utilizes insideofme fn in target
-	public void checkCollisions(){
+	public void checkCollisions() {
+		for( Target t : targets ) {
+			if( t.insideOfMe(projectiles.get(0)) ) {
+				t.setHit();
+				projectiles.remove(0);
+			}
+		}
+		
+		if( projectiles.size() > 0 && projectiles.get(0).getyPos() <= 0 ) {
+			projectiles.remove(0);
+		}
 	}
 	
 	// not exactly elegant but it seems the best way to get the projectile into the world
@@ -103,6 +110,10 @@ public class World extends JPanel {
 	}
 	public ArrayList<Projectile> getProjectiles() {
 		return projectiles;
+	}
+	
+	public void addProjectile(Projectile p) {
+		projectiles.add(p);
 	}
 
 }

@@ -14,10 +14,10 @@ public class Target implements Comparable<Target>{
 		System.out.println("   S: " + size);
 	}
 	public void setHit() {
-		
+		hit = true;
 	}
 	public boolean isHit() {
-		return false;
+		return hit;
 	}
 	@Override
 	public int compareTo(Target o) {
@@ -30,8 +30,7 @@ public class Target implements Comparable<Target>{
 	public int getSize(){
 		return size;
 	}
-	public Projectile insideOfMe() {
-		//checks if there are any projectiles inside of target
-		return null;
+	public boolean insideOfMe(Projectile p) {
+		return( p.getxPos() == location && p.getyPos() <= size );
 	}
 }
