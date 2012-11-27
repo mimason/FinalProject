@@ -77,6 +77,8 @@ public class World extends JPanel {
 	// Randomly generates non-overlapping targets to the right of the launcher
 	public void generateTargets(int numTargets) {	
 
+		targets.clear();
+		
 		Random rand = new Random();
 
 		ArrayList<Integer> locations = new ArrayList<Integer>();
