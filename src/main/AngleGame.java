@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
@@ -15,7 +16,11 @@ public class AngleGame extends JFrame {
 		
 		// Create the world
 		World w = new World();
-		add(w);
+		add(w, BorderLayout.CENTER);
+		
+		// Creates the controls
+		UserInterface ui = new UserInterface(w);
+		add(ui, BorderLayout.SOUTH);
 	}
 	
 	public static void main(String[] args) {
