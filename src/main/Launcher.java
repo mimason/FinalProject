@@ -1,4 +1,4 @@
-package FinalProjectPackage;
+package main;
 
 public class Launcher {
 	private double angle;

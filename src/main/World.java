@@ -1,4 +1,4 @@
-package FinalProjectPackage;
+package main;
 import java.util.ArrayList;
 
 
@@ -43,9 +43,6 @@ public class World {
 	}
 	public ArrayList<Projectile> getProjectiles() {
 		return projectiles;
-	}
-	public static void main(String[] args) {
-		
 	}
 
 }

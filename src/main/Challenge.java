@@ -1,4 +1,4 @@
-package FinalProjectPackage;
+package main;
 
 public class Challenge {
 	private boolean complete;

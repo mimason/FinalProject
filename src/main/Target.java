@@ -1,4 +1,4 @@
-package FinalProjectPackage;
+package main;
 
 public class Target implements Comparable<Target>{
 	private int location;

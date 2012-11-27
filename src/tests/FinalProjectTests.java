@@ -1,17 +1,17 @@
-package ProjTests;
-
-import static org.junit.Assert.*;
+package tests;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-
 import junit.framework.Assert;
+import main.Launcher;
+import main.Projectile;
+import main.Target;
+import main.World;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import FinalProjectPackage.*;
 
 public class FinalProjectTests {
 	private static World world;
