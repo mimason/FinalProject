@@ -1,16 +1,22 @@
 package main;
 
 public class Target implements Comparable<Target>{
+	
 	private int location;
 	private int size;
 	private boolean hit;
-	public Target(int location) {
-		this.location=location;
+	
+	public Target(int location, int size) {
+		this.location = location;
+		this.size = size;
+		System.out.println("Creating new target:");
+		System.out.println("   L: " + location);
+		System.out.println("   S: " + size);
 	}
 	public void setHit() {
 		
 	}
-	public boolean isHIt() {
+	public boolean isHit() {
 		return false;
 	}
 	@Override
