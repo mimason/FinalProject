@@ -1,5 +1,8 @@
 package main;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 public class Target implements Comparable<Target>{
 	
 	private int location;
@@ -32,5 +35,10 @@ public class Target implements Comparable<Target>{
 	}
 	public boolean insideOfMe(Projectile p) {
 		return( p.getxPos() == location && p.getyPos() <= size );
+	}
+	
+	public void draw(Graphics g) {
+		g.setColor(Color.BLUE);
+		g.drawLine(location, 0, location, size);
 	}
 }

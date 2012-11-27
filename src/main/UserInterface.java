@@ -35,7 +35,7 @@ public class UserInterface extends JPanel {
 			} catch(NumberFormatException ex) {
 				System.out.println("Please enter a valid number");
 			}
-
+			world.repaint();
 		}
 		
 	}
