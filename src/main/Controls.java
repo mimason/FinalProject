@@ -1,5 +1,8 @@
 package main;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,22 +17,53 @@ import javax.swing.event.ChangeListener;
 
 @SuppressWarnings("serial")
 public class Controls extends JPanel {
-	
+
 	World world;
 	JTextField numTargetsBox;
+	private JButton genTargetsButton;
+	private JButton clearTargetsButton;
 	JSlider powerSlider;
 	JSlider angleSlider;
-	
+	private JLabel numTargetsLabel;
+
 	public Controls(World w) {
 		world = w;
-		
-		// Generate targets
-		numTargetsBox = new JTextField(5);
-		JButton genTargetsButton = new JButton("Generate Targets");
-		add(numTargetsBox);
-		add(genTargetsButton);
+
+		// Setup panel
+		JPanel targetPanel = new JPanel();
+		targetPanel.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		// Create elements
+		numTargetsLabel = new JLabel("Number of targets ");
+		numTargetsBox = new JTextField(3);
+		genTargetsButton = new JButton("Generate Targets");
+		clearTargetsButton = new JButton("Clear Targets");
+		// Add elements to panel
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 0;
+		targetPanel.add(numTargetsLabel, c);
+		c.gridx = 1;
+		targetPanel.add(numTargetsBox, c);
+		c.insets = new Insets(10,0,0,0);
+		c.gridx = 0;
+		c.gridy = 1;
+		c.gridwidth = 2;
+		c.ipady = 20;
+		targetPanel.add(genTargetsButton, c);
+		c.gridx = 0;
+		c.gridy = 2;
+		c.gridwidth = 2;
+		c.ipady = 0;
+		c.insets = new Insets(0,0,0,0);
+		targetPanel.add(clearTargetsButton, c);
+		// Add listeners to elements
 		genTargetsButton.addActionListener(new GenerateTargetsButtonListener());
-		
+		clearTargetsButton.addActionListener(new GenerateTargetsButtonListener());
+		targetPanel.setBorder(BorderFactory.createTitledBorder("SET UP"));
+		add(targetPanel);
+
+
 		JPanel powerPanel = new JPanel();
 		JPanel anglePanel = new JPanel();
 		powerSlider = new JSlider(JSlider.HORIZONTAL,0,100,world.getLauncher().getPower());
@@ -52,21 +86,26 @@ public class Controls extends JPanel {
 		add(powerPanel);
 		add(anglePanel);
 	}
-	
+
 	private class GenerateTargetsButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String number = numTargetsBox.getText();
-			try {
-				int n = Integer.parseInt(number);
-				world.generateTargets(n);
-			} catch(NumberFormatException ex) {
-				System.out.println("Please enter a valid number");
+			JButton source = (JButton)e.getSource();
+			if( source == genTargetsButton ) {
+				String number = numTargetsBox.getText();
+				try {
+					int n = Integer.parseInt(number);
+					world.generateTargets(n);
+				} catch(NumberFormatException ex) {
+					System.out.println("Please enter a valid number");
+				}
+			} else if( source == clearTargetsButton ) {
+				world.clearTargets();
 			}
 			world.repaint();
 		}
-		
+
 	}
 	private class SliderChangeListener implements ChangeListener {
 

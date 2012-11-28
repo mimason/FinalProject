@@ -143,4 +143,8 @@ public class World extends JPanel {
 		projectiles.add(p);
 	}
 
+	public void clearTargets() {
+		targets.clear();
+	}
+
 }

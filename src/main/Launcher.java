@@ -10,8 +10,8 @@ public class Launcher {
 	private int power;
 	public Launcher() {
 		angle = 45;
-		power = 10;
-		projPath=new ArrayList<Integer>();
+		power = 50;
+		projPath = new ArrayList<Integer>();
 	}
 	public double getAngle() {
 		return angle;
