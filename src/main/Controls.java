@@ -61,8 +61,8 @@ public class Controls extends JPanel {
 		c.insets = new Insets(0,0,0,0);
 		setupPanel.add(clearTargetsButton, c);
 		// Add listeners to elements
-		genTargetsButton.addActionListener(new GenerateTargetsButtonListener());
-		clearTargetsButton.addActionListener(new GenerateTargetsButtonListener());
+		genTargetsButton.addActionListener(new SetupButtonListener());
+		clearTargetsButton.addActionListener(new SetupButtonListener());
 		setupPanel.setBorder(BorderFactory.createTitledBorder("SETUP"));
 		add(setupPanel);
 
@@ -90,7 +90,7 @@ public class Controls extends JPanel {
 		add(anglePanel);
 	}
 
-	private class GenerateTargetsButtonListener implements ActionListener {
+	private class SetupButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
