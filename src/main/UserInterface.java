@@ -32,8 +32,8 @@ public class UserInterface extends JPanel {
 		
 		JPanel powerPanel = new JPanel();
 		JPanel anglePanel = new JPanel();
-		powerSlider = new JSlider(JSlider.HORIZONTAL,0,100,10);
-		angleSlider = new JSlider(JSlider.HORIZONTAL,0,90,45);
+		powerSlider = new JSlider(JSlider.HORIZONTAL,0,100,world.getLauncher().getPower());
+		angleSlider = new JSlider(JSlider.HORIZONTAL,0,90,(int)world.getLauncher().getAngle());
 		powerSlider.setMajorTickSpacing(20);
 		powerSlider.setMinorTickSpacing(2);
 		powerSlider.setPaintLabels(true);
