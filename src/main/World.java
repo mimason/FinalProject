@@ -20,11 +20,10 @@ public class World extends JPanel {
 	private Image background;
 	
 	private Launcher launcher;
-//	private Projectile projectile;  // it would be better to just use this, don't think we
-	                                // need to save all projectiles
 	private ArrayList<Target> targets;
-	
-	private ArrayList<Projectile> projectiles; // for testing
+	private ArrayList<Projectile> projectiles;
+//	private Projectile projectile;  // it would be better to just use this, don't think we
+    // need to save all projectiles
 
 	public World() {
 		projectiles = new ArrayList<Projectile>();

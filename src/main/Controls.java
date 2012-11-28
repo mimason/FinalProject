@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -28,10 +29,12 @@ public class Controls extends JPanel {
 
 	public Controls(World w) {
 		world = w;
+		
+		setLayout(new FlowLayout(FlowLayout.LEFT));
 
 		// Setup panel
-		JPanel targetPanel = new JPanel();
-		targetPanel.setLayout(new GridBagLayout());
+		JPanel setupPanel = new JPanel();
+		setupPanel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		// Create elements
 		numTargetsLabel = new JLabel("Number of targets ");
@@ -42,26 +45,26 @@ public class Controls extends JPanel {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 0;
-		targetPanel.add(numTargetsLabel, c);
+		setupPanel.add(numTargetsLabel, c);
 		c.gridx = 1;
-		targetPanel.add(numTargetsBox, c);
+		setupPanel.add(numTargetsBox, c);
 		c.insets = new Insets(10,0,0,0);
 		c.gridx = 0;
 		c.gridy = 1;
 		c.gridwidth = 2;
 		c.ipady = 20;
-		targetPanel.add(genTargetsButton, c);
+		setupPanel.add(genTargetsButton, c);
 		c.gridx = 0;
 		c.gridy = 2;
 		c.gridwidth = 2;
 		c.ipady = 0;
 		c.insets = new Insets(0,0,0,0);
-		targetPanel.add(clearTargetsButton, c);
+		setupPanel.add(clearTargetsButton, c);
 		// Add listeners to elements
 		genTargetsButton.addActionListener(new GenerateTargetsButtonListener());
 		clearTargetsButton.addActionListener(new GenerateTargetsButtonListener());
-		targetPanel.setBorder(BorderFactory.createTitledBorder("SET UP"));
-		add(targetPanel);
+		setupPanel.setBorder(BorderFactory.createTitledBorder("SETUP"));
+		add(setupPanel);
 
 
 		JPanel powerPanel = new JPanel();
