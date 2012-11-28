@@ -18,10 +18,11 @@ public class AngleGame extends JFrame {
 		// Create the world
 		World w = new World();
 		add(w, BorderLayout.CENTER);
+		w.repaint();
 		
 		
 		// Creates the controls
-		UserInterface ui = new UserInterface(w);
+		Controls ui = new Controls(w);
 		add(ui, BorderLayout.SOUTH);
 	}
 

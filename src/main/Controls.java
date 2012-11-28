@@ -13,14 +13,14 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 @SuppressWarnings("serial")
-public class UserInterface extends JPanel {
+public class Controls extends JPanel {
 	
 	World world;
 	JTextField numTargetsBox;
 	JSlider powerSlider;
 	JSlider angleSlider;
 	
-	public UserInterface(World w) {
+	public Controls(World w) {
 		world = w;
 		
 		// Generate targets
