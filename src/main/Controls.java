@@ -10,21 +10,24 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 @SuppressWarnings("serial")
 public class Controls extends JPanel {
 
-	World world;
-	JTextField numTargetsBox;
+	private World world;
+	private JTextField numTargetsBox;
 	private JButton genTargetsButton;
 	private JButton clearTargetsButton;
-	JSlider powerSlider;
-	JSlider angleSlider;
+	private JSlider powerSlider;
+	private JSlider angleSlider;
 	private JLabel numTargetsLabel;
 	private JButton launchButton;
 	private JTextField powerBox;
@@ -32,7 +35,7 @@ public class Controls extends JPanel {
 
 	public Controls(World w) {
 		world = w;
-		
+
 		setLayout(new FlowLayout(FlowLayout.LEFT));
 
 		// Setup panel
@@ -125,14 +128,60 @@ public class Controls extends JPanel {
 		c1.ipadx = 50;
 		launchPanel.add(launchButton, c1);
 		// Add listeners to elements
+		powerBox.getDocument().addDocumentListener(new InputBoxListener());
+		angleBox.getDocument().addDocumentListener(new InputBoxListener());
 		launchButton.addActionListener(new ControlButtonListener());
 		launchPanel.setBorder(BorderFactory.createTitledBorder("LAUNCH"));
 		add(launchPanel);
-		
+
+	}
+
+	private class InputBoxListener implements DocumentListener {
+
+		@Override
+		public void insertUpdate(DocumentEvent e) {
+			updateSliders();
+		}
+
+		@Override
+		public void removeUpdate(DocumentEvent e) {
+			updateSliders();
+		}
+
+		@Override
+		public void changedUpdate(DocumentEvent e) {
+			updateSliders();
+		}
+
+		private void updateSliders() {
+			try {
+				int power;
+				if( powerBox.getText().equals("") ) {
+					power = 0;
+				} else {
+					power = Integer.parseInt(powerBox.getText());
+				}
+				world.getLauncher().setPower(power);
+				powerSlider.setValue(power);
+				
+				int angle;
+				if( angleBox.getText().equals("") ) {
+					angle = 0;
+				} else {
+					angle = Integer.parseInt(angleBox.getText());
+				}
+				world.getLauncher().setPower(angle);
+				angleSlider.setValue(angle);
+				
+			} catch(IllegalStateException ex) {
+				System.out.println(ex);
+			}
+			world.repaint();
+		}
+
 	}
 
 	private class ControlButtonListener implements ActionListener {
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			JButton source = (JButton)e.getSource();
@@ -142,7 +191,9 @@ public class Controls extends JPanel {
 					int n = Integer.parseInt(number);
 					world.generateTargets(n);
 				} catch(NumberFormatException ex) {
-					System.out.println("Please enter a valid number");
+					JOptionPane.showMessageDialog(null,
+							"Error: Please enter a valid number", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			} else if( source == clearTargetsButton ) {
 				world.clearTargets();
@@ -151,10 +202,9 @@ public class Controls extends JPanel {
 			}
 			world.repaint();
 		}
-
 	}
-	private class SliderChangeListener implements ChangeListener {
 
+	private class SliderChangeListener implements ChangeListener {
 		@Override
 		public void stateChanged(ChangeEvent e) {
 			JSlider source = (JSlider)e.getSource();
