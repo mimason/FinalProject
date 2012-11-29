@@ -1,12 +1,21 @@
 package main;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 @SuppressWarnings("serial")
 public class AngleGame extends JFrame {
+	
 	public AngleGame() {
 		setTitle("Angles");
 		setSize(new Dimension(800, 600));
@@ -14,13 +23,51 @@ public class AngleGame extends JFrame {
 		// Centers the window
 		setLocationRelativeTo(null);
 		
+		// Set layout
+		setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.BOTH;
+		c.gridx = 0;
+		
 		// Create the world
 		World w = new World();
-		add(w, BorderLayout.CENTER);
+		c.gridy = 0;
+		c.ipadx = 800;
+		c.ipady = 400;
+		//c.anchor = GridBagConstraints.PAGE_START;
+		w.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		add(w, c);
 		
 		// Creates the controls
-		UserInterface ui = new UserInterface(w);
-		add(ui, BorderLayout.SOUTH);
+		Controls ui = new Controls(w);
+		c.gridy = 1;
+		c.ipady = 0;
+		c.anchor = GridBagConstraints.PAGE_END;
+		add(ui, c);
+		
+		// Add menu bar
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		menuBar.add(createFileMenu());
+	}
+
+	private JMenu createFileMenu() {
+		
+		JMenu menu = new JMenu("File"); 
+		menu.add(createFileExitItem());
+		return menu;
+	}
+	
+	private JMenuItem createFileExitItem() {
+		
+		JMenuItem item = new JMenuItem("Exit");
+		class MenuItemListener implements ActionListener {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		}
+		item.addActionListener(new MenuItemListener());
+		return item;
 	}
 	
 	public static void main(String[] args) {

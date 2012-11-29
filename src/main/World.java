@@ -1,5 +1,4 @@
 package main;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -21,11 +20,10 @@ public class World extends JPanel {
 	private Image background;
 	
 	private Launcher launcher;
-	private Projectile projectile;  // it would be better to just use this, don't think we
-	// need to save all projectiles
 	private ArrayList<Target> targets;
-	
-	private ArrayList<Projectile> projectiles; // for testing
+	private ArrayList<Projectile> projectiles;
+//	private Projectile projectile;  // it would be better to just use this, don't think we
+    // need to save all projectiles
 
 	public World() {
 		projectiles = new ArrayList<Projectile>();
@@ -35,14 +33,13 @@ public class World extends JPanel {
 		// Get the background image
 		URL url = getClass().getResource("/doubtful_asian_girl.jpg");
 		MediaTracker tracker = new MediaTracker(this);
-		Image image = Toolkit.getDefaultToolkit().getImage(url);
-		tracker.addImage(image, 0);
+		background = Toolkit.getDefaultToolkit().getImage(url);
+		tracker.addImage(background, 0);
 		try {
 			tracker.waitForID(0);
 		} catch(InterruptedException e) { 
 			return;
 		}
-		background = image.getScaledInstance(WIDTH, HEIGHT, Image.SCALE_FAST);
 	}
 
 	public void paintComponent(Graphics graphics) {
@@ -144,6 +141,10 @@ public class World extends JPanel {
 
 	public void addProjectile(Projectile p) {
 		projectiles.add(p);
+	}
+
+	public void clearTargets() {
+		targets.clear();
 	}
 
 }

@@ -24,7 +24,6 @@ public class Target implements Comparable<Target>{
 	}
 	@Override
 	public int compareTo(Target o) {
-		// TODO Auto-generated method stub
 		return o.location - location;
 	}
 	public int getLocation(){
