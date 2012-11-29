@@ -16,6 +16,7 @@ public class Target implements Comparable<Target>{
 		System.out.println("   L: " + location);
 		System.out.println("   S: " + size);
 	}
+	
 	public void setHit() {
 		hit = true;
 	}

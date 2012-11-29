@@ -112,7 +112,7 @@ public class Controls extends JPanel {
 			} else if( source == clearTargetsButton ) {
 				world.clearTargets();
 			} else if( source == launchButton ) {
-				world.launch();
+				world.launch();				
 			}
 			world.repaint();
 		}

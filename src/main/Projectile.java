@@ -1,6 +1,7 @@
 package main;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Iterator;
 
 
 public class Projectile {
@@ -25,11 +26,11 @@ public class Projectile {
 		this.yPos = yPos;
 		this.xVel = Math.round(xVel);
 		this.yVel = Math.round(yVel);
-		System.out.println("Creating new projectile:");
+		/*System.out.println("Creating new projectile:");
 		System.out.println("   P_x: " + xPos);
 		System.out.println("   P_y: " + yPos);
 		System.out.println("   V_x: " + xVel);
-		System.out.println("   V_y: " + yVel);
+		System.out.println("   V_y: " + yVel);*/
 	}
 	
 	public double calcSpeed() {
@@ -58,6 +59,8 @@ public class Projectile {
 		yPos = yPos + yVel*deltaTime;
 		yVel = yVel - 10*deltaTime;
 	}
+
+	
 	
 	
 }

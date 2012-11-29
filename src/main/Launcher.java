@@ -5,10 +5,12 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 
 public class Launcher {
-	ArrayList<Integer> projPath;
+	private World world;
+	private ArrayList<Integer> projPath;
 	private double angle;
 	private int power;
-	public Launcher() {
+	public Launcher(World world) {
+		this.world = world;
 		angle = 45;
 		power = 50;
 		projPath = new ArrayList<Integer>();
@@ -40,11 +42,16 @@ public class Launcher {
 		drawProjPath(this,g);
 	}
 	public void drawProjPath(Launcher launcher,Graphics g) {
+		
 		Projectile temp = launcher.launch();
+		int time = 1;
 		while(temp.getyPos()>=0) {
-			projPath.add((int)temp.getxPos());
-			projPath.add((int)temp.getyPos());
-			temp.move(1);
+			if(time%(1/world.getDTime()) == 0){
+				projPath.add((int)temp.getxPos());
+				projPath.add((int)temp.getyPos());
+			}
+			temp.move(world.getDTime());
+			time++;
 		}
 		for(int i=0; i<projPath.size(); i+=2) {
 			g.drawOval(projPath.get(i), projPath.get(i+1), 5, 5);

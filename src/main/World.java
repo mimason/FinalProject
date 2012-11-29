@@ -6,28 +6,32 @@ import java.awt.MediaTracker;
 import java.awt.Toolkit;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 import javax.swing.JPanel;
 
 
 @SuppressWarnings("serial")
-public class World extends JPanel {
+public class World extends JPanel implements Runnable {
 
 	private final int HEIGHT = 400;
 	private final int WIDTH = 800;
 
 	private Image background;
-	
+	private double dTime = .01;
 	private Launcher launcher;
 	private ArrayList<Target> targets;
 	private ArrayList<Projectile> projectiles;
+	private Thread moveThread;
 //	private Projectile projectile;  // it would be better to just use this, don't think we
     // need to save all projectiles
 
 	public World() {
+		moveThread  = new Thread(this);
+		moveThread.start();
 		projectiles = new ArrayList<Projectile>();
-		launcher = new Launcher();
+		launcher = new Launcher(this);
 		targets = new ArrayList<Target>();
 
 		// Get the background image
@@ -102,15 +106,21 @@ public class World extends JPanel {
 	// should probably calculate collisions via the bottom left corner as it will lead
 	// utilizes insideofme fn in target
 	public void checkCollisions() {
-		for( Target t : targets ) {
-			if( t.insideOfMe(projectiles.get(0)) ) {
-				t.setHit();
-				projectiles.remove(0);
-			}
+		
+		for (Iterator<Projectile> it = projectiles.listIterator(); it.hasNext();) {
+		    Projectile p = it.next();
+		    if(p.getyPos() <= 0){
+		    	it.remove();
+		    }
 		}
-
-		if( projectiles.size() > 0 && projectiles.get(0).getyPos() <= 0 ) {
-			projectiles.remove(0);
+		for( Target t : targets ) {
+			for (Iterator<Projectile> it = projectiles.listIterator(); it.hasNext();) {
+			   Projectile p = it.next();
+			   if(t.insideOfMe(p)){
+					it.remove();
+					t.setHit();
+				}
+			}
 		}
 	}
 
@@ -120,6 +130,7 @@ public class World extends JPanel {
 		if(temp != null){
 			projectiles.add(temp);
 		}
+		
 	}
 
 	// iterates through projectiles and moves them
@@ -127,8 +138,11 @@ public class World extends JPanel {
 		for( Projectile p : projectiles ) {
 			p.move(deltaTime);
 		}
+		checkCollisions();		
 	}
-
+	public double getDTime(){
+		return dTime;
+	}
 	public Launcher getLauncher() {
 		return launcher;
 	}
@@ -145,6 +159,21 @@ public class World extends JPanel {
 
 	public void clearTargets() {
 		targets.clear();
+	}
+
+	@Override
+	public void run() {
+		while(true){
+			synchronized(moveThread){
+				moveProjectiles(dTime);
+				repaint();
+				try { 
+					moveThread.wait((long)(dTime * 1000));
+				} catch(InterruptedException e) { 
+					System.out.println("InterruptedException caught"); 
+				}
+			}
+		}
 	}
 
 }
