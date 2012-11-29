@@ -27,6 +27,8 @@ public class Controls extends JPanel {
 	JSlider angleSlider;
 	private JLabel numTargetsLabel;
 	private JButton launchButton;
+	private JTextField powerBox;
+	private JTextField angleBox;
 
 	public Controls(World w) {
 		world = w;
@@ -89,10 +91,43 @@ public class Controls extends JPanel {
 		angleSlider.addChangeListener(new SliderChangeListener());
 		add(powerPanel);
 		add(anglePanel);
-		
+
+		// Launch panel
+		JPanel launchPanel = new JPanel();
+		launchPanel.setLayout(new GridBagLayout());
+		GridBagConstraints c1 = new GridBagConstraints();
+		// Create elements
+		JLabel powerLabel = new JLabel("Power ");
+		powerBox = new JTextField(3);
+		powerBox.setText("" + world.getLauncher().getPower());
+		JLabel angleLabel = new JLabel("Angle ");
+		angleBox = new JTextField(3);
+		angleBox.setText("" + (int)world.getLauncher().getAngle());
 		launchButton = new JButton("Launch");
+		// Add elements to panel
+		c1.insets = new Insets(5,0,0,0);
+		c1.fill = GridBagConstraints.HORIZONTAL;
+		c1.gridx = 0;
+		c1.gridy = 0;
+		launchPanel.add(powerLabel, c1);
+		c1.gridx = 1;
+		launchPanel.add(powerBox, c1);
+		c1.gridx = 0;
+		c1.gridy = 1;
+		launchPanel.add(angleLabel, c1);
+		c1.gridx = 1;
+		launchPanel.add(angleBox, c1);
+		c1.insets = new Insets(10,0,0,0);
+		c1.gridx = 0;
+		c1.gridy = 2;
+		c1.gridwidth = 2;
+		c1.ipady = 20;
+		c1.ipadx = 50;
+		launchPanel.add(launchButton, c1);
+		// Add listeners to elements
 		launchButton.addActionListener(new ControlButtonListener());
-		add(launchButton);
+		launchPanel.setBorder(BorderFactory.createTitledBorder("LAUNCH"));
+		add(launchPanel);
 		
 	}
 
@@ -125,8 +160,10 @@ public class Controls extends JPanel {
 			JSlider source = (JSlider)e.getSource();
 			if(source==powerSlider) {
 				world.getLauncher().setPower(source.getValue());
+				powerBox.setText(String.valueOf(source.getValue()));
 			} else if(source==angleSlider) {
 				world.getLauncher().setAngle(source.getValue());
+				angleBox.setText(String.valueOf(source.getValue()));
 			}
 			world.repaint();
 		}		
