@@ -26,6 +26,7 @@ public class Controls extends JPanel {
 	JSlider powerSlider;
 	JSlider angleSlider;
 	private JLabel numTargetsLabel;
+	private JButton launchButton;
 
 	public Controls(World w) {
 		world = w;
@@ -61,8 +62,8 @@ public class Controls extends JPanel {
 		c.insets = new Insets(0,0,0,0);
 		setupPanel.add(clearTargetsButton, c);
 		// Add listeners to elements
-		genTargetsButton.addActionListener(new SetupButtonListener());
-		clearTargetsButton.addActionListener(new SetupButtonListener());
+		genTargetsButton.addActionListener(new ControlButtonListener());
+		clearTargetsButton.addActionListener(new ControlButtonListener());
 		setupPanel.setBorder(BorderFactory.createTitledBorder("SETUP"));
 		add(setupPanel);
 
@@ -88,9 +89,14 @@ public class Controls extends JPanel {
 		angleSlider.addChangeListener(new SliderChangeListener());
 		add(powerPanel);
 		add(anglePanel);
+		
+		launchButton = new JButton("Launch");
+		launchButton.addActionListener(new ControlButtonListener());
+		add(launchButton);
+		
 	}
 
-	private class SetupButtonListener implements ActionListener {
+	private class ControlButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -105,6 +111,8 @@ public class Controls extends JPanel {
 				}
 			} else if( source == clearTargetsButton ) {
 				world.clearTargets();
+			} else if( source == launchButton ) {
+				world.launch();
 			}
 			world.repaint();
 		}
