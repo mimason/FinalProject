@@ -35,7 +35,7 @@ public class World extends JPanel implements Runnable {
 		targets = new ArrayList<Target>();
 
 		// Get the background image
-		URL url = getClass().getResource("/doubtful_asian_girl.jpg");
+		URL url = getClass().getResource("/background.jpg");
 		MediaTracker tracker = new MediaTracker(this);
 		background = Toolkit.getDefaultToolkit().getImage(url);
 		tracker.addImage(background, 0);

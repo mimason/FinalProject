@@ -16,8 +16,6 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 @SuppressWarnings("serial")
 public class Controls extends JPanel {
@@ -128,56 +126,9 @@ public class Controls extends JPanel {
 		c1.ipadx = 50;
 		launchPanel.add(launchButton, c1);
 		// Add listeners to elements
-		//powerBox.getDocument().addDocumentListener(new InputBoxListener());
-		//angleBox.getDocument().addDocumentListener(new InputBoxListener());
 		launchButton.addActionListener(new ControlButtonListener());
 		launchPanel.setBorder(BorderFactory.createTitledBorder("LAUNCH"));
 		add(launchPanel);
-
-	}
-
-	private class InputBoxListener implements DocumentListener {
-
-		@Override
-		public void insertUpdate(DocumentEvent e) {
-			updateSliders();
-		}
-
-		@Override
-		public void removeUpdate(DocumentEvent e) {
-			updateSliders();
-		}
-
-		@Override
-		public void changedUpdate(DocumentEvent e) {
-			updateSliders();
-		}
-
-		private void updateSliders() {
-			try {
-				int power;
-				if( powerBox.getText().equals("") ) {
-					power = 0;
-				} else {
-					power = Integer.parseInt(powerBox.getText());
-				}
-				world.getLauncher().setPower(power);
-				powerSlider.setValue(power);
-				
-				int angle;
-				if( angleBox.getText().equals("") ) {
-					angle = 0;
-				} else {
-					angle = Integer.parseInt(angleBox.getText());
-				}
-				world.getLauncher().setPower(angle);
-				angleSlider.setValue(angle);
-				
-			} catch(IllegalStateException ex) {
-				System.out.println(ex);
-			}
-			world.repaint();
-		}
 
 	}
 
