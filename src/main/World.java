@@ -57,10 +57,6 @@ public class World extends JPanel implements Runnable {
 		g.scale(1.0, -1.0);
 		g.translate(0, -HEIGHT);
 
-		// Draw background
-		//g.setColor(Color.WHITE);
-		//g.fillRect(0, 0, WIDTH, HEIGHT);
-
 		// Draw launcher
 		launcher.draw(g);
 

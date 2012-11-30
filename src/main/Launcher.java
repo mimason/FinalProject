@@ -9,6 +9,8 @@ public class Launcher {
 	private ArrayList<Integer> projPath;
 	private double angle;
 	private int power;
+	private final int SIZE = 5;
+	
 	public Launcher(World world) {
 		this.world = world;
 		angle = 45;
@@ -54,7 +56,7 @@ public class Launcher {
 			time++;
 		}
 		for(int i=0; i<projPath.size(); i+=2) {
-			g.drawOval(projPath.get(i), projPath.get(i+1), 5, 5);
+			g.drawOval(projPath.get(i) - SIZE/2, projPath.get(i+1) - SIZE/2, SIZE, SIZE);
 		}
 		projPath.clear();
 	}

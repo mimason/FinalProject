@@ -8,7 +8,6 @@ public class Projectile {
 	
 	private final int SIZE = 10;
 	
-	//private World world;//used for collision detection, not sure if it's more appropriate here or in word itself
 	private double xPos;
 	private double yPos;
 	private double xVel;
