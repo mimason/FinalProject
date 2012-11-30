@@ -30,8 +30,8 @@ public class Controls extends JPanel {
 	private JSlider angleSlider;
 	private JLabel numTargetsLabel;
 	private JButton launchButton;
-	private JTextField powerBox;
-	private JTextField angleBox;
+	private JLabel powerBox;
+	private JLabel angleBox;
 
 	public Controls(World w) {
 		world = w;
@@ -101,10 +101,10 @@ public class Controls extends JPanel {
 		GridBagConstraints c1 = new GridBagConstraints();
 		// Create elements
 		JLabel powerLabel = new JLabel("Power ");
-		powerBox = new JTextField(3);
+		powerBox = new JLabel();
 		powerBox.setText("" + world.getLauncher().getPower());
 		JLabel angleLabel = new JLabel("Angle ");
-		angleBox = new JTextField(3);
+		angleBox = new JLabel();
 		angleBox.setText("" + (int)world.getLauncher().getAngle());
 		launchButton = new JButton("Launch");
 		// Add elements to panel
@@ -128,8 +128,8 @@ public class Controls extends JPanel {
 		c1.ipadx = 50;
 		launchPanel.add(launchButton, c1);
 		// Add listeners to elements
-		powerBox.getDocument().addDocumentListener(new InputBoxListener());
-		angleBox.getDocument().addDocumentListener(new InputBoxListener());
+		//powerBox.getDocument().addDocumentListener(new InputBoxListener());
+		//angleBox.getDocument().addDocumentListener(new InputBoxListener());
 		launchButton.addActionListener(new ControlButtonListener());
 		launchPanel.setBorder(BorderFactory.createTitledBorder("LAUNCH"));
 		add(launchPanel);
@@ -208,10 +208,10 @@ public class Controls extends JPanel {
 		@Override
 		public void stateChanged(ChangeEvent e) {
 			JSlider source = (JSlider)e.getSource();
-			if(source==powerSlider) {
+			if( source == powerSlider ) {
 				world.getLauncher().setPower(source.getValue());
 				powerBox.setText(String.valueOf(source.getValue()));
-			} else if(source==angleSlider) {
+			} else if( source == angleSlider ) {
 				world.getLauncher().setAngle(source.getValue());
 				angleBox.setText(String.valueOf(source.getValue()));
 			}
