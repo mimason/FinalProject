@@ -8,6 +8,7 @@ public class Target implements Comparable<Target>{
 	private int location;
 	private int size;
 	private boolean hit;
+	public final int targetWidth = 10;
 	
 	public Target(int location, int size) {
 		this.location = location;
@@ -37,8 +38,9 @@ public class Target implements Comparable<Target>{
 		return( p.getxPos() == location && p.getyPos() <= size );
 	}
 	
+	
 	public void draw(Graphics g) {
 		g.setColor(Color.BLUE);
-		g.drawLine(location, 0, location, size);
+		g.fillRect(location, size, targetWidth, targetWidth);
 	}
 }
