@@ -6,6 +6,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -30,6 +32,7 @@ public class Controls extends JPanel {
 	private JButton launchButton;
 	private JLabel powerBox;
 	private JLabel angleBox;
+	private ChangeKeys launchAdjustments;
 
 	public Controls(World w) {
 		world = w;
@@ -40,6 +43,9 @@ public class Controls extends JPanel {
 		JPanel setupPanel = new JPanel();
 		setupPanel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
+		setupPanel.setFocusable(false);
+		
+		setupPanel.addKeyListener(launchAdjustments);
 		// Create elements
 		numTargetsLabel = new JLabel("Number of targets ");
 		numTargetsBox = new JTextField("5", 3);
@@ -69,6 +75,7 @@ public class Controls extends JPanel {
 		clearTargetsButton.addActionListener(new ControlButtonListener());
 		setupPanel.setBorder(BorderFactory.createTitledBorder("SETUP"));
 		add(setupPanel);
+		
 
 
 		JPanel powerPanel = new JPanel();
@@ -181,5 +188,54 @@ public class Controls extends JPanel {
 			}
 			world.repaint();
 		}		
+	}
+	
+	private class ChangeKeys implements KeyListener{
+
+		@Override
+		public void keyPressed(KeyEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void keyReleased(KeyEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			//up arrow 
+			if(e.getKeyCode() == 38){
+				System.out.println("up");
+				angleSlider.requestFocus(true);
+				world.getLauncher().setAngle(world.getLauncher().getAngle()+1);
+			}
+			//Down Arrow
+			if(e.getKeyCode() == 40){
+				System.out.println("down");
+				angleSlider.requestFocus(true);
+				world.getLauncher().setAngle(world.getLauncher().getAngle()-1);
+			}
+			//Right Arrow
+			if(e.getKeyCode() == 39){
+				System.out.println("right");
+				powerSlider.requestFocus(true);
+				world.getLauncher().setPower(world.getLauncher().getPower()+1);
+			}
+			//Left arrow
+			if(e.getKeyCode() == 37){
+				System.out.println("left");
+				powerSlider.requestFocus(true);
+				world.getLauncher().setPower(world.getLauncher().getPower()+1);
+			}
+			//Space
+			if(e.getKeyCode() == 32){
+				launchButton.requestFocus(true);
+				System.out.println("space");
+				world.launch();
+			}
+		}
 	}
 }
