@@ -42,7 +42,7 @@ public class Controls extends JPanel {
 		GridBagConstraints c = new GridBagConstraints();
 		// Create elements
 		numTargetsLabel = new JLabel("Number of targets ");
-		numTargetsBox = new JTextField(3);
+		numTargetsBox = new JTextField("5", 3);
 		genTargetsButton = new JButton("Generate Targets");
 		clearTargetsButton = new JButton("Clear Targets");
 		// Add elements to panel

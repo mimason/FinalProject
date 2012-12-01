@@ -17,7 +17,7 @@ import javax.swing.JMenuItem;
 public class AngleGame extends JFrame {
 	
 	public AngleGame() {
-		setTitle("Angles");
+		setTitle("Floating Crate Destroyer");
 		setSize(new Dimension(800, 600));
 		
 				

@@ -26,6 +26,7 @@ public class World extends JPanel implements Runnable {
 	private Thread moveThread;
 //	private Projectile projectile;  // it would be better to just use this, don't think we
     // need to save all projectiles
+	public static Image crate;
 
 	public World() {
 		moveThread  = new Thread(this);
@@ -41,6 +42,16 @@ public class World extends JPanel implements Runnable {
 		tracker.addImage(background, 0);
 		try {
 			tracker.waitForID(0);
+		} catch(InterruptedException e) { 
+			return;
+		}
+		
+		// Get the crate image
+		url = getClass().getResource("/crate.jpg");
+		crate = Toolkit.getDefaultToolkit().getImage(url);
+		tracker.addImage(crate, 1);
+		try {
+			tracker.waitForID(1);
 		} catch(InterruptedException e) { 
 			return;
 		}
