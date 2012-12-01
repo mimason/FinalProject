@@ -150,10 +150,13 @@ public class Controls extends JPanel {
 				String number = numTargetsBox.getText();
 				try {
 					int n = Integer.parseInt(number);
+					if( n > 50 || n == 0){
+						throw( new NumberFormatException());
+					}
 					world.generateTargets(n);
 				} catch(NumberFormatException ex) {
 					JOptionPane.showMessageDialog(null,
-							"Error: Please enter a valid number", "Error",
+							"Error: Please enter a number between 1 and 50.", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				}
 			} else if( source == clearTargetsButton ) {
