@@ -8,14 +8,14 @@ public class Target implements Comparable<Target>{
 	private int location;
 	private int height;
 	private boolean hit;
-	public final int TARGET_SIZE = 10;
+	public final static int TARGET_SIZE = 50;
 	
 	public Target(int location, int size) {
 		this.location = location;
 		this.height = size;
-		System.out.println("Creating new target:");
-		System.out.println("   L: " + location);
-		System.out.println("   S: " + size);
+		//System.out.println("Creating new target:");
+		//System.out.println("   L: " + location);
+		//System.out.println("   S: " + size);
 	}
 	
 	public void setHit() {

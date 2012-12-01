@@ -44,6 +44,8 @@ public class World extends JPanel implements Runnable {
 		} catch(InterruptedException e) { 
 			return;
 		}
+		
+		generateTargets(5); // start with 5 targets
 	}
 
 	public void paintComponent(Graphics graphics) {
@@ -82,12 +84,12 @@ public class World extends JPanel implements Runnable {
 
 		while( targets.size() < numTargets ) {
 
-			int location = rand.nextInt(3*WIDTH/4)+WIDTH/4;
-			int size = rand.nextInt(HEIGHT/3)+50;
+			int location = rand.nextInt(3*WIDTH/4)+WIDTH/4 - Target.TARGET_SIZE;
+			int height = rand.nextInt(HEIGHT/3)+50;
 
 			if( !locations.contains(location) ) {
 				locations.add(location);
-				makeTarget(location, size);
+				makeTarget(location, height);
 			}
 		}
 	}
@@ -109,10 +111,11 @@ public class World extends JPanel implements Runnable {
 		    	it.remove();
 		    }
 		}
+		
 		for( Target t : targets ) {
-			for (Iterator<Projectile> it = projectiles.listIterator(); it.hasNext();) {
+			for( Iterator<Projectile> it = projectiles.listIterator(); it.hasNext(); ) {
 			   Projectile p = it.next();
-			   if(t.insideOfMe(p) && !t.isHit()){
+			   if( t.insideOfMe(p) && !t.isHit() ){
 					it.remove();
 					t.setHit();
 					
