@@ -8,7 +8,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
-
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 
@@ -121,6 +121,19 @@ public class World extends JPanel implements Runnable {
 					
 				}
 			}
+		}
+		boolean unHit = false;
+		for(Target t : targets) {
+		
+			if(!t.isHit()){
+				unHit = true;
+			}
+		}
+		
+		if(!unHit && !targets.isEmpty()){
+			JOptionPane.showMessageDialog(this, "You win!");
+			generateTargets(5);
+			
 		}
 		
 		
