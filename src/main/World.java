@@ -126,7 +126,6 @@ public class World extends JPanel implements Runnable {
 		if(temp != null){
 			projectiles.add(temp);
 		}
-		
 	}
 
 	// iterates through projectiles and moves them

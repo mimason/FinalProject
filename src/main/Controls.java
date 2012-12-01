@@ -98,10 +98,10 @@ public class Controls extends JPanel {
 		launchPanel.setLayout(new GridBagLayout());
 		GridBagConstraints c1 = new GridBagConstraints();
 		// Create elements
-		JLabel powerLabel = new JLabel("Power ");
+		JLabel powerLabel = new JLabel("Power:");
 		powerBox = new JLabel();
 		powerBox.setText("" + world.getLauncher().getPower());
-		JLabel angleLabel = new JLabel("Angle ");
+		JLabel angleLabel = new JLabel("Angle:");
 		angleBox = new JLabel();
 		angleBox.setText("" + (int)world.getLauncher().getAngle());
 		launchButton = new JButton("Launch");
@@ -110,14 +110,23 @@ public class Controls extends JPanel {
 		c1.fill = GridBagConstraints.HORIZONTAL;
 		c1.gridx = 0;
 		c1.gridy = 0;
+		c1.weightx = 0.1;
 		launchPanel.add(powerLabel, c1);
+		
 		c1.gridx = 1;
+		c1.weightx = 1.0;
+		c1.anchor = GridBagConstraints.EAST;
 		launchPanel.add(powerBox, c1);
+		
+		c1.ipadx = 0;
+		c1.anchor = GridBagConstraints.CENTER;
 		c1.gridx = 0;
 		c1.gridy = 1;
 		launchPanel.add(angleLabel, c1);
+		
 		c1.gridx = 1;
 		launchPanel.add(angleBox, c1);
+		
 		c1.insets = new Insets(10,0,0,0);
 		c1.gridx = 0;
 		c1.gridy = 2;
@@ -125,6 +134,7 @@ public class Controls extends JPanel {
 		c1.ipady = 20;
 		c1.ipadx = 50;
 		launchPanel.add(launchButton, c1);
+		
 		// Add listeners to elements
 		launchButton.addActionListener(new ControlButtonListener());
 		launchPanel.setBorder(BorderFactory.createTitledBorder("LAUNCH"));
