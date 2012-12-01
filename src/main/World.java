@@ -112,12 +112,15 @@ public class World extends JPanel implements Runnable {
 		for( Target t : targets ) {
 			for (Iterator<Projectile> it = projectiles.listIterator(); it.hasNext();) {
 			   Projectile p = it.next();
-			   if(t.insideOfMe(p)){
+			   if(t.insideOfMe(p) && !t.isHit()){
 					it.remove();
 					t.setHit();
+					
 				}
 			}
 		}
+		
+		
 	}
 
 	// not exactly elegant but it seems the best way to get the projectile into the world
@@ -163,7 +166,7 @@ public class World extends JPanel implements Runnable {
 				moveProjectiles(dTime);
 				repaint();
 				try { 
-					moveThread.wait((long)(dTime * 1000));
+					moveThread.wait((long)(dTime * 300));
 				} catch(InterruptedException e) { 
 					System.out.println("InterruptedException caught"); 
 				}

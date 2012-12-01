@@ -6,13 +6,13 @@ import java.awt.Graphics;
 public class Target implements Comparable<Target>{
 	
 	private int location;
-	private int size;
+	private int height;
 	private boolean hit;
-	public final int targetWidth = 10;
+	public final int TARGET_SIZE = 10;
 	
 	public Target(int location, int size) {
 		this.location = location;
-		this.size = size;
+		this.height = size;
 		System.out.println("Creating new target:");
 		System.out.println("   L: " + location);
 		System.out.println("   S: " + size);
@@ -32,15 +32,19 @@ public class Target implements Comparable<Target>{
 		return location;
 	}
 	public int getSize(){
-		return size;
+		return height;
 	}
 	public boolean insideOfMe(Projectile p) {
-		return( p.getxPos() == location && p.getyPos() <= size );
+		return( (p.getxPos() >= location && p.getxPos() < (location + TARGET_SIZE) ) && (p.getyPos() >= height && p.getyPos() < (height + TARGET_SIZE) ));
 	}
 	
 	
 	public void draw(Graphics g) {
 		g.setColor(Color.BLUE);
-		g.fillRect(location, size, targetWidth, targetWidth);
+		if(isHit()){
+			g.setColor(Color.RED);
+			
+		}
+		g.fillRect(location, height, TARGET_SIZE, TARGET_SIZE);
 	}
 }
