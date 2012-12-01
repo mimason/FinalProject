@@ -19,6 +19,7 @@ public class AngleGame extends JFrame {
 	public AngleGame() {
 		setTitle("Angles");
 		setSize(new Dimension(800, 600));
+		
 				
 		// Centers the window
 		setLocationRelativeTo(null);
@@ -28,6 +29,7 @@ public class AngleGame extends JFrame {
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.BOTH;
 		c.gridx = 0;
+		c.anchor = GridBagConstraints.CENTER;
 		
 		// Create the world
 		World w = new World();
@@ -75,5 +77,6 @@ public class AngleGame extends JFrame {
 		AngleGame ag = new AngleGame();
 		ag.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ag.setVisible(true);
+		ag.setResizable(false);
 	}
 }
