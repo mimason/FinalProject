@@ -68,7 +68,6 @@ public class AngleGame extends JFrame {
 		item.addActionListener(new MenuItemListener());
 		return item;
 	}
-	
 	public static void main(String[] args) {
 		
 		AngleGame ag = new AngleGame();

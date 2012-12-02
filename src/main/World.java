@@ -21,13 +21,14 @@ public class World extends JPanel implements Runnable {
 
 	private final int HEIGHT = 400;
 	private final int WIDTH = 800;
-
 	private Image background;
 	private double dTime = .01;
 	private Launcher launcher;
 	private ArrayList<Target> targets;
 	private ArrayList<Projectile> projectiles;
 	private Thread moveThread;
+	ArrayList<String> questions;
+	ArrayList<String> answers;
 	//	private Projectile projectile;  // it would be better to just use this, don't think we
 	// need to save all projectiles
 
@@ -35,6 +36,7 @@ public class World extends JPanel implements Runnable {
 	public static BufferedImage cannon;
 
 	public World() {
+		generateQuestions();
 		moveThread  = new Thread(this);
 		
 		projectiles = new ArrayList<Projectile>();
@@ -147,7 +149,6 @@ public class World extends JPanel implements Runnable {
 					if( t.insideOfMe(p) && !t.isHit() ){
 						it.remove();
 						t.setHit();
-
 					}
 				}
 			}
@@ -162,7 +163,8 @@ public class World extends JPanel implements Runnable {
 		}
 
 		if(!unHit && !targets.isEmpty()){
-			JOptionPane.showMessageDialog(this, "You win!");
+			JOptionPane.showMessageDialog(this, "You've gotten all the targets, now you need to answer questions to make your victoory complete. Aaargh!");
+			askQuestions();
 			generateTargets(5);
 			//launcher.reset();
 		}
@@ -205,14 +207,90 @@ public class World extends JPanel implements Runnable {
 	public void clearTargets() {
 		targets.clear();
 	}
+	void generateQuestions(){
+		
+		String[] temp = {
+				"Which disease was appropriately named after the dark splotches it formed on its victims' bodies in the 14th century?", "Bubonic Plague",
 
+				"Which of these three cities is located closest to New York? Moscow, Buenos Aires, or Honolulu?", "Moscow",
+
+				"By what name do we call the series of European power struggles fought from 1618-48?", "Thirty Years War",
+
+				"How many total degrees are there among all the angles of a hexagon?", "720",
+
+				"Can you name a common four letter word which reads the same upside down as right-side up?", "NOON",
+
+				"Around 1765, which two English surveyors drew a line separating the southern slave states from the northern free states?", "Mason and Dixon",
+
+				"How many gods are there in Buddhism?", "0",
+
+				"What is the lowest point on the land of the continental United states?", "Death Valley",
+
+				"One of the longest running broadway shows ever, with over 4000 performances, contained the name of a common animal in the title. What was it?", "Cats",
+
+				"Which two people signed the U.S. Constitution on 9/17/1787, and later became U.S. Presidents?", "George Washington and James Madison",
+
+				"How many hair spikes does Bart Simpson have?", "9",
+
+				"What is the world's largest herbiferous flowering plant?", "Banana",
+
+				"The flag that sailed atop many pirate ships was called what?", "Jolly Roger",
+
+				"What state is bordered by exactly one other state?", "Maine",
+
+				"Generally speaking, who lives longer: cats or dogs?", "Cats",
+
+				"Which state, out of the continental US, extends the farthest north?", "Minnesota",
+
+				"What's the sixth letter of the Greek alphabet?", "Zeta",
+
+				"What is the Yiddish expression for being drunk?", "Shikker",
+
+				"The name of the smallest citrus fruit comes to us from the Chinese language. What is it?", "Kumquat",
+
+				"What is the flat land adjacent to rivers called?", "Floodplains",
+
+				"What is the first name of President James K. Polk's wife?", "Sarah",
+
+				"March is the third month of what calendar?", "Gregorian",
+
+				"What are the most common livestock (animals raised for commercial purposes) in the world?", "Chickens",
+
+				"What is the most popular table gambling game in Las Vegas?", "Blackjack"
+		};
+		questions = new ArrayList<String>();
+		answers =  new ArrayList<String>();
+		for(int i = 0; i < temp.length-1;i+=2){
+			questions.add(temp[i]);
+			answers.add(temp[i+1]);
+		}
+	}
+	void askQuestions(){
+		ArrayList<String> tempQ = new ArrayList<String>(questions);
+		ArrayList<String> tempA = new ArrayList<String>(answers);
+		Random randGen = new Random();		
+		for(int i = 0; i < 5;i++){
+			int temp = randGen.nextInt(tempQ.size());
+			String answer = JOptionPane.showInputDialog(tempQ.get(temp));
+			if(answer == null){
+				answer = "";
+			}
+			if(answer.equalsIgnoreCase(tempA.get(temp))){
+				JOptionPane.showMessageDialog(this, "Correct!");
+			}else{
+				JOptionPane.showMessageDialog(this, "That is either quite wrong or just barely not what we're looking for");
+			}
+			tempQ.remove(temp);
+			tempA.remove(temp);
+		}
+	}
 	@Override
 	public void run() {
 		while(true){
 			synchronized(moveThread){
 				moveProjectiles(dTime);
 				repaint();
-				try { 
+				try {
 					moveThread.wait((long)(dTime * 300));
 				} catch(InterruptedException e) { 
 					System.out.println("InterruptedException caught"); 
@@ -220,5 +298,4 @@ public class World extends JPanel implements Runnable {
 			}
 		}
 	}
-
 }
