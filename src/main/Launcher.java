@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -34,7 +35,7 @@ public class Launcher {
 	// returned projectile is  added to the world's projectile list so that 
 	// it can iterate through the list and the projectile can move itself
 	public Projectile launch() {
-		Projectile p = new Projectile(0, 0, Math.cos(Math.toRadians(angle))*power, Math.sin(Math.toRadians(angle))*power);
+		Projectile p = new Projectile(Math.cos(Math.toRadians(angle))*104, Math.sin(Math.toRadians(angle))*104, Math.cos(Math.toRadians(angle))*power, Math.sin(Math.toRadians(angle))*power);
 		return p;
 	}
 	
@@ -47,16 +48,19 @@ public class Launcher {
 		BufferedImage cannon = World.cannon;
         Graphics2D g2d = (Graphics2D) g;
         g2d.rotate(Math.toRadians(angle), 0, 0);
+        //g2d.drawImage(cannon, 0, -14, 104, 14, 0, 0, cannon.getWidth(), cannon.getHeight(), null);
         g2d.drawImage(cannon, 0, -cannon.getHeight()/2, null);
         //g2d.fillRect(0, -5, 60, 10);
         g2d.rotate(-Math.toRadians(angle), 0, 0);
         
         // Draw base
+        g2d.setColor(Color.BLACK);
         g2d.fillOval(-25, -25, 50, 50);
-        g2d.clearRect(0, -25, 100, 25);
+        g2d.clearRect(0, -25, 200, 25);
         
 		drawProjPath(this,g);
 	}
+	
 	public void drawProjPath(Launcher launcher,Graphics g) {
 		
 		Projectile temp = launcher.launch();
@@ -73,5 +77,10 @@ public class Launcher {
 			g.drawOval(projPath.get(i) - SIZE/2, projPath.get(i+1) - SIZE/2, SIZE, SIZE);
 		}
 		projPath.clear();
+	}
+	
+	public void reset() {
+		power = 50;
+		angle = 45;
 	}
 }

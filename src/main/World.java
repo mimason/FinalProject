@@ -62,9 +62,11 @@ public class World extends JPanel implements Runnable {
 			return;
 		}
 
+		// Get the cannon image
 		try {
 			url = getClass().getResource("/cannon.gif");
-			cannon = ImageIO.read((url));
+			cannon = ImageIO. read((url));
+			//cannon = (BufferedImage) cannon.getScaledInstance(90, 15, BufferedImage.SCALE_FAST);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -162,7 +164,7 @@ public class World extends JPanel implements Runnable {
 		if(!unHit && !targets.isEmpty()){
 			JOptionPane.showMessageDialog(this, "You win!");
 			generateTargets(5);
-
+			//launcher.reset();
 		}
 
 
