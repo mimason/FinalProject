@@ -5,19 +5,24 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.util.regex.Pattern;
 
+import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import javax.swing.text.PlainDocument;
 
 @SuppressWarnings("serial")
 public class Controls extends JPanel {
@@ -29,10 +34,10 @@ public class Controls extends JPanel {
 	private JSlider powerSlider;
 	private JSlider angleSlider;
 	private JLabel numTargetsLabel;
-	private JButton launchButton;
+	public JButton launchButton;
 	private JLabel powerBox;
 	private JLabel angleBox;
-	private ChangeKeys launchAdjustments;
+	//private ChangeKeys launchAdjustments;
 
 	public Controls(World w) {
 		world = w;
@@ -43,12 +48,10 @@ public class Controls extends JPanel {
 		JPanel setupPanel = new JPanel();
 		setupPanel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		setupPanel.setFocusable(false);
-		
-		setupPanel.addKeyListener(launchAdjustments);
+		//setupPanel.addKeyListener(launchAdjustments);
 		// Create elements
 		numTargetsLabel = new JLabel("Number of targets ");
-		numTargetsBox = new JTextField("5", 3);
+		numTargetsBox = new NumericTextField("5", 3);
 		genTargetsButton = new JButton("Generate Targets");
 		clearTargetsButton = new JButton("Clear Targets");
 		// Add elements to panel
@@ -76,8 +79,7 @@ public class Controls extends JPanel {
 		setupPanel.setBorder(BorderFactory.createTitledBorder("SETUP"));
 		add(setupPanel);
 		
-
-
+		// Sliders
 		JPanel powerPanel = new JPanel();
 		JPanel anglePanel = new JPanel();
 		powerSlider = new JSlider(JSlider.HORIZONTAL,0,100,world.getLauncher().getPower());
@@ -146,12 +148,46 @@ public class Controls extends JPanel {
 		launchButton.addActionListener(new ControlButtonListener());
 		launchPanel.setBorder(BorderFactory.createTitledBorder("LAUNCH"));
 		add(launchPanel);
-
+		
+		// Set key bindings
+		launchButton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("SPACE"), "launch");
+		launchButton.getActionMap().put("launch", new ControlButtonListener());
+		
 	}
 
-	private class ControlButtonListener implements ActionListener {
+	// source: http://www.coderanch.com/how-to/java/NumericTextField
+	class NumericTextField extends JTextField
+	{
+
+	    public NumericTextField(String string, int i) {
+			super(string, i);
+		}
+
+		@Override
+	    protected Document createDefaultModel()
+	    {
+	        return new NumericDocument();
+	    }
+
+	    private class NumericDocument extends PlainDocument
+	    {
+	        // The regular expression to match input against (zero or more digits)
+	        private final Pattern DIGITS = Pattern.compile("\\d*");
+
+	        @Override
+	        public void insertString(int offs, String str, AttributeSet a) throws BadLocationException
+	        {
+	            // Only insert the text if it matches the regular expression
+	            if (str != null && DIGITS.matcher(str).matches())
+	                super.insertString(offs, str, a);
+	        }
+	    }
+	}
+	
+	private class ControlButtonListener extends AbstractAction {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 			JButton source = (JButton)e.getSource();
 			if( source == genTargetsButton ) {
 				String number = numTargetsBox.getText();
@@ -173,6 +209,7 @@ public class Controls extends JPanel {
 			}
 			world.repaint();
 		}
+
 	}
 
 	private class SliderChangeListener implements ChangeListener {
@@ -190,52 +227,52 @@ public class Controls extends JPanel {
 		}		
 	}
 	
-	private class ChangeKeys implements KeyListener{
-
-		@Override
-		public void keyPressed(KeyEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void keyReleased(KeyEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void keyTyped(KeyEvent e) {
-			//up arrow 
-			if(e.getKeyCode() == 38){
-				System.out.println("up");
-				angleSlider.requestFocus(true);
-				world.getLauncher().setAngle(world.getLauncher().getAngle()+1);
-			}
-			//Down Arrow
-			if(e.getKeyCode() == 40){
-				System.out.println("down");
-				angleSlider.requestFocus(true);
-				world.getLauncher().setAngle(world.getLauncher().getAngle()-1);
-			}
-			//Right Arrow
-			if(e.getKeyCode() == 39){
-				System.out.println("right");
-				powerSlider.requestFocus(true);
-				world.getLauncher().setPower(world.getLauncher().getPower()+1);
-			}
-			//Left arrow
-			if(e.getKeyCode() == 37){
-				System.out.println("left");
-				powerSlider.requestFocus(true);
-				world.getLauncher().setPower(world.getLauncher().getPower()+1);
-			}
-			//Space
-			if(e.getKeyCode() == 32){
-				launchButton.requestFocus(true);
-				System.out.println("space");
-				world.launch();
-			}
-		}
-	}
+//	private class ChangeKeys implements KeyListener{
+//
+//		@Override
+//		public void keyPressed(KeyEvent arg0) {
+//			// TODO Auto-generated method stub
+//			
+//		}
+//
+//		@Override
+//		public void keyReleased(KeyEvent arg0) {
+//			// TODO Auto-generated method stub
+//			
+//		}
+//
+//		@Override
+//		public void keyTyped(KeyEvent e) {
+//			//up arrow 
+//			if(e.getKeyCode() == 38){
+//				System.out.println("up");
+//				angleSlider.requestFocus(true);
+//				world.getLauncher().setAngle(world.getLauncher().getAngle()+1);
+//			}
+//			//Down Arrow
+//			if(e.getKeyCode() == 40){
+//				System.out.println("down");
+//				angleSlider.requestFocus(true);
+//				world.getLauncher().setAngle(world.getLauncher().getAngle()-1);
+//			}
+//			//Right Arrow
+//			if(e.getKeyCode() == 39){
+//				System.out.println("right");
+//				powerSlider.requestFocus(true);
+//				world.getLauncher().setPower(world.getLauncher().getPower()+1);
+//			}
+//			//Left arrow
+//			if(e.getKeyCode() == 37){
+//				System.out.println("left");
+//				powerSlider.requestFocus(true);
+//				world.getLauncher().setPower(world.getLauncher().getPower()+1);
+//			}
+//			//Space
+//			if(e.getKeyCode() == 32){
+//				launchButton.requestFocus(true);
+//				System.out.println("space");
+//				world.launch();
+//			}
+//		}
+//	}
 }

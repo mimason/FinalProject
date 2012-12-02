@@ -18,7 +18,6 @@ public class AngleGame extends JFrame {
 		setTitle("Floating Crate Destroyer");
 		setSize(new Dimension(800, 600));
 		
-				
 		// Centers the window
 		setLocationRelativeTo(null);
 		
@@ -46,6 +45,9 @@ public class AngleGame extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		menuBar.add(createFileMenu());
+		
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	private JMenu createFileMenu() {
@@ -70,8 +72,7 @@ public class AngleGame extends JFrame {
 	public static void main(String[] args) {
 		
 		AngleGame ag = new AngleGame();
-		ag.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ag.setVisible(true);
-		ag.setResizable(false);
+		
 	}
 }
