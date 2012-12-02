@@ -1,13 +1,11 @@
 package main;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -34,10 +32,7 @@ public class AngleGame extends JFrame {
 		// Create the world
 		World w = new World();
 		c.gridy = 0;
-		c.ipadx = 800;
 		c.ipady = 400;
-		//c.anchor = GridBagConstraints.PAGE_START;
-		w.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		add(w, c);
 		
 		// Creates the controls

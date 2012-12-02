@@ -4,10 +4,14 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -24,13 +28,15 @@ public class World extends JPanel implements Runnable {
 	private ArrayList<Target> targets;
 	private ArrayList<Projectile> projectiles;
 	private Thread moveThread;
-//	private Projectile projectile;  // it would be better to just use this, don't think we
-    // need to save all projectiles
+	//	private Projectile projectile;  // it would be better to just use this, don't think we
+	// need to save all projectiles
+
 	public static Image crate;
+	public static BufferedImage cannon;
 
 	public World() {
 		moveThread  = new Thread(this);
-		moveThread.start();
+		
 		projectiles = new ArrayList<Projectile>();
 		launcher = new Launcher(this);
 		targets = new ArrayList<Target>();
@@ -45,7 +51,7 @@ public class World extends JPanel implements Runnable {
 		} catch(InterruptedException e) { 
 			return;
 		}
-		
+
 		// Get the crate image
 		url = getClass().getResource("/crate.jpg");
 		crate = Toolkit.getDefaultToolkit().getImage(url);
@@ -55,8 +61,17 @@ public class World extends JPanel implements Runnable {
 		} catch(InterruptedException e) { 
 			return;
 		}
-		
+
+		try {
+			url = getClass().getResource("/cannon.gif");
+			cannon = ImageIO.read((url));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		generateTargets(5); // start with 5 targets
+		
+		moveThread.start();
 	}
 
 	public void paintComponent(Graphics graphics) {
@@ -88,7 +103,7 @@ public class World extends JPanel implements Runnable {
 	public void generateTargets(int numTargets) {	
 
 		targets.clear();
-		
+
 		Random rand = new Random();
 
 		ArrayList<Integer> locations = new ArrayList<Integer>();
@@ -115,39 +130,42 @@ public class World extends JPanel implements Runnable {
 	// should probably calculate collisions via the bottom left corner as it will lead
 	// utilizes insideofme fn in target
 	public void checkCollisions() {
-		
+
 		for (Iterator<Projectile> it = projectiles.listIterator(); it.hasNext();) {
-		    Projectile p = it.next();
-		    if(p.getyPos() <= 0){
-		    	it.remove();
-		    }
+			Projectile p = it.next();
+			if(p.getyPos() <= 0){
+				it.remove();
+			}
 		}
-		
-		for( Target t : targets ) {
-			for( Iterator<Projectile> it = projectiles.listIterator(); it.hasNext(); ) {
-			   Projectile p = it.next();
-			   if( t.insideOfMe(p) && !t.isHit() ){
-					it.remove();
-					t.setHit();
-					
+
+		if( !targets.isEmpty() ) {
+			for( Target t : targets ) {
+				for( Iterator<Projectile> it = projectiles.listIterator(); it.hasNext(); ) {
+					Projectile p = it.next();
+					if( t.insideOfMe(p) && !t.isHit() ){
+						it.remove();
+						t.setHit();
+
+					}
 				}
 			}
 		}
+
 		boolean unHit = false;
 		for(Target t : targets) {
-		
+
 			if(!t.isHit()){
 				unHit = true;
 			}
 		}
-		
+
 		if(!unHit && !targets.isEmpty()){
 			JOptionPane.showMessageDialog(this, "You win!");
 			generateTargets(5);
-			
+
 		}
-		
-		
+
+
 	}
 
 	// not exactly elegant but it seems the best way to get the projectile into the world

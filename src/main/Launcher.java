@@ -1,7 +1,8 @@
 package main;
 
-import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Launcher {
@@ -38,9 +39,22 @@ public class Launcher {
 	}
 	
 	public void draw(Graphics g) {
-		g.setColor(Color.GREEN);
-		g.drawLine(0, 0, (int) (Math.cos(Math.toRadians(angle))*50), (int) (Math.sin(Math.toRadians(angle))*50)); 
-		g.setColor(Color.WHITE);
+//		g.setColor(Color.GREEN);
+//		g.drawLine(0, 0, (int) (Math.cos(Math.toRadians(angle))*50), (int) (Math.sin(Math.toRadians(angle))*50)); 
+//		g.setColor(Color.WHITE);
+		
+		// Draw cannon
+		BufferedImage cannon = World.cannon;
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.rotate(Math.toRadians(angle), 0, 0);
+        g2d.drawImage(cannon, 0, -cannon.getHeight()/2, null);
+        //g2d.fillRect(0, -5, 60, 10);
+        g2d.rotate(-Math.toRadians(angle), 0, 0);
+        
+        // Draw base
+        g2d.fillOval(-25, -25, 50, 50);
+        g2d.clearRect(0, -25, 100, 25);
+        
 		drawProjPath(this,g);
 	}
 	public void drawProjPath(Launcher launcher,Graphics g) {
