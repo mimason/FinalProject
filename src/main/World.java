@@ -29,8 +29,6 @@ public class World extends JPanel implements Runnable {
 	private Thread moveThread;
 	ArrayList<String> questions;
 	ArrayList<String> answers;
-	//	private Projectile projectile;  // it would be better to just use this, don't think we
-	// need to save all projectiles
 
 	public static Image crate;
 	public static BufferedImage cannon;
